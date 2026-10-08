@@ -9,9 +9,14 @@ function App() {
   const [error, setError] = useState("");
   const [editName, setEditName] = useState("");
   const [editEmail, setEditEmail] = useState("");
+  const API_URL = import.meta.env.VITE_API_URL;
+
+  console.log("API URL:", API_URL);
+  
+  
 
   useEffect(() => {
-  fetch("http://127.0.0.1:8000/customers")
+  fetch(`${API_URL}/customers`)
     .then((response) => response.json())
     .then((data) => setCustomers(data));
 }, []);
@@ -62,7 +67,7 @@ function App() {
 
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/customers/${editingCustomer.id}`,
+      `${API_URL}/customers/${editingCustomer.id}`,
       {
         method: "PUT",
         headers: {
@@ -109,7 +114,7 @@ function handleCancelEdit() {
   async function handleDeleteCustomer(id: number) {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/customers/${id}`,
+      `${API_URL}/customers/${id}`,
       {
         method: "DELETE",
       }
@@ -145,7 +150,7 @@ async function handleAddCustomer() {
   }
 
   try {
-    const response = await fetch("http://127.0.0.1:8000/customers", {
+    const response = await fetch(`${API_URL}/customers`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
